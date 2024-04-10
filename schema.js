@@ -10,6 +10,7 @@ const taskSchema=new Schema({
     createdOn:{
         type:Date,
         default:Date.now
-    }
+    },
+    user:String
 })
 module.exports=mongoose.model('task',taskSchema);

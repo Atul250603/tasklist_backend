@@ -11,9 +11,10 @@ app.use(express.json());
 app.use(cors());
 connectToDB();
 //To fetch all the tasks
-app.get('/',async(req,res)=>{
+app.post('/',async(req,res)=>{
     try{
-    let allTasks=await model.find({});
+    let allTasks=await model.find({user:req.body.email});
+    if(!allTasks)throw "Error In Fetching Your Tasks"
     res.status(200).json({tasks:allTasks});
     }
     catch(err){
