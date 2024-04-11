@@ -29,7 +29,7 @@ app.post('/createTask',async(req,res)=>{
     let newTask=new model(task);
     let savedTask=await newTask.save();
     if(!savedTask || savedTask===null || savedTask===undefined){
-        res.status(500).json({error:"Error in adding the task"});
+        throw "Error In Adding The Task";
     }
     res.status(200).json({success:"Added task to the list"});
     }
@@ -41,27 +41,32 @@ app.post('/createTask',async(req,res)=>{
 //To update the status of a particular task
 
 app.put('/updateTask/:taskId',async(req,res)=>{
+    try{
     let taskId=(req.params.taskId).trim();
     const updatedTask=await model.findByIdAndUpdate({_id:taskId},{'$set':{status:'Completed'}});
     if(!updatedTask || updatedTask===null || updatedTask===undefined){
-        res.status(500).json({error:"Error in updating the status of the task"});
+        throw "Error in updating the status of the task";
     }
-    else{
         res.status(200).json({success:"Successfully updated the status of the task"});
+    }
+    catch(error){
+        res.status(500).json({error:err});
     }
 });
 
 //To delete a particular task
 
 app.delete('/deleteTask/:taskId',async(req,res)=>{
-    console.log("Received Delete Request");
+    try{
     let taskId=(req.params.taskId).trim();
     const deletedTask=await model.findOneAndRemove({_id:taskId});
     if(!deletedTask|| deletedTask===null|| deletedTask===undefined){
-        res.status(500).json({error:"Error in deleting the status of the task"});
+        throw "Error in deleting the status of the task";
     }
-    else{
         res.status(200).json({success:"Successfully deleted the task"});
+    }
+    catch(error){
+        res.status(500).json({error:err});
     }
 });
 
