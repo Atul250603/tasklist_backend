@@ -31,7 +31,7 @@ app.post('/createTask',async(req,res)=>{
     if(!savedTask || savedTask===null || savedTask===undefined){
         throw "Error In Adding The Task";
     }
-    res.status(200).json({success:"Added task to the list"});
+    res.status(200).json({success:"Added task to the list",task:savedTask});
     }
     catch(error){
         res.status(500).json({error:error});
@@ -56,10 +56,10 @@ app.put('/updateTask/:taskId',async(req,res)=>{
 
 //To delete a particular task
 
-app.delete('/deleteTask/:taskId',async(req,res)=>{
+app.post('/deleteTask/:taskId',async(req,res)=>{
     try{
     let taskId=(req.params.taskId).trim();
-    const deletedTask=await model.deleteOne({_id:taskId});
+    const deletedTask=await model.deleteOne({_id:taskId,email:req.body.email});
     if(!deletedTask|| deletedTask===null|| deletedTask===undefined){
         throw "Error in deleting the status of the task";
     }
