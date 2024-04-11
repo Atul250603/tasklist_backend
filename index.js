@@ -54,6 +54,7 @@ app.put('/updateTask/:taskId',async(req,res)=>{
 //To delete a particular task
 
 app.delete('/deleteTask/:taskId',async(req,res)=>{
+    console.log("Received Delete Request");
     let taskId=(req.params.taskId).trim();
     const deletedTask=await model.findOneAndRemove({_id:taskId});
     if(!deletedTask|| deletedTask===null|| deletedTask===undefined){
