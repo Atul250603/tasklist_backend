@@ -17,8 +17,8 @@ app.post('/',async(req,res)=>{
     if(!allTasks)throw "Error In Fetching Your Tasks"
     res.status(200).json({tasks:allTasks});
     }
-    catch(err){
-        res.status(500).json({error:err});
+    catch(error){
+        res.status(500).json({error:error});
     }
 });
 
@@ -33,8 +33,8 @@ app.post('/createTask',async(req,res)=>{
     }
     res.status(200).json({success:"Added task to the list"});
     }
-    catch(err){
-        res.status(500).json({error:err});
+    catch(error){
+        res.status(500).json({error:error});
     }
 });
 
@@ -50,7 +50,7 @@ app.put('/updateTask/:taskId',async(req,res)=>{
         res.status(200).json({success:"Successfully updated the status of the task"});
     }
     catch(error){
-        res.status(500).json({error:err});
+        res.status(500).json({error:error});
     }
 });
 
@@ -59,14 +59,14 @@ app.put('/updateTask/:taskId',async(req,res)=>{
 app.delete('/deleteTask/:taskId',async(req,res)=>{
     try{
     let taskId=(req.params.taskId).trim();
-    const deletedTask=await model.findOneAndRemove({_id:taskId});
+    const deletedTask=await model.deleteOne({_id:taskId});
     if(!deletedTask|| deletedTask===null|| deletedTask===undefined){
         throw "Error in deleting the status of the task";
     }
         res.status(200).json({success:"Successfully deleted the task"});
     }
     catch(error){
-        res.status(500).json({error:err});
+        res.status(500).json({error:error});
     }
 });
 
